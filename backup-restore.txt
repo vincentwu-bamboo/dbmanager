@@ -1,0 +1,33 @@
+# Database Restoration Guide
+
+This guide provides instructions on how to restore a PostgreSQL database using the `restore.sh` script.
+
+## Prerequisites
+
+- Ensure you have PostgreSQL installed and running on your system.
+- Make sure you have the necessary permissions to restore databases.
+
+- Make sure you have permission to execute script
+chmod +x restoregwsuitebydate.sh
+
+## Backup all gwsuite with folder name
+./backupgwsuite.sh your_username r3
+
+## Restore all gwsuite db from folder name
+./restoregwsuitebydate.sh vincentwu 05-15 r3
+
+## Restore single db
+./restore.sh vincentwu 10-9_pcdb.sql pcdb
+# Or from a specific folder
+./restore.sh vincentwu r3/10-9_pcdb.sql pcdb
+
+For XCenter change the database-config.xml
+
+  <database
+    name="PolicyCenterDatabase"
+    autoupgrade="full"
+    dbtype="postgresql">
+    <dbcp-connection-pool
+      jdbc-url="jdbc:postgresql://localhost:5432/pcdb?user=pcuser&amp;password=your_password">
+    </dbcp-connection-pool>
+  </database>
