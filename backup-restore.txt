@@ -1,5 +1,5 @@
 # Database Restoration Guide
-
+# Created By Vincent Wu
 This guide provides instructions on how to restore a PostgreSQL database using the `restore.sh` script.
 
 ## Prerequisites
