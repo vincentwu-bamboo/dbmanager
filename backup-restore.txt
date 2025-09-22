@@ -13,8 +13,8 @@ chmod +x restoregwsuitebydate.sh
 ## Backup all gwsuite with folder name
 ./backupgwsuite.sh your_username r3
 
-## Restore all gwsuite db from folder name
-./restoregwsuitebydate.sh vincentwu 05-15 r3
+## Restore all gwsuite db from folder name/date
+./restoregwsuitebydate.sh vincentwu r3/05-31
 
 ## Restore single db
 ./restore.sh vincentwu 10-9_pcdb.sql pcdb

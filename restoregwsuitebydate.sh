@@ -1,15 +1,22 @@
 #!/bin/bash
 
-# Check if a username, date, and backup folder are provided
-if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
-  echo "Usage: $0 <username> <date> <backup_folder>"
+# Check if a username and combined date/backup folder are provided
+if [ -z "$1" ] || [ -z "$2" ]; then
+  echo "Usage: $0 <username> <backup_folder/date>"
   exit 1
 fi
 
 # Assign the arguments to variables
 username=$1
-backup_date=$2
-backup_folder=$3
+combined_path=$2
+
+# Extract the date and backup folder from the combined path
+backup_date=$(basename "$combined_path")
+backup_folder=$(dirname "$combined_path")
+
+echo "Username: $username"
+echo "Backup folder: $backup_folder"
+echo "Backup date: $backup_date"
 
 # Function to drop, create, and restore a database
 restore_database() {
@@ -22,6 +29,9 @@ restore_database() {
   fi
 
   echo "Restoring $dbname from $backup_file..."
+
+    # Terminate any active connections to the database
+  psql -U "$username" -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$dbname';" >/dev/null 2>&1
 
   # Drop the existing database
   dropdb -U "$username" "$dbname" 2>/dev/null
